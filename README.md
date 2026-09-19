@@ -1,6 +1,6 @@
 # Bat anatomy explorer — offline, shared-key edition
 
-**Current download: v1.1.0 (September 18, 2026), including the NP trajectory planner.**
+**Current download: v1.1.1 (September 18, 2026), with larger brain framing in probe videos.**
 
 Explore **presubiculum (PrS), parasubiculum (PaS), medial and lateral entorhinal
 cortex (mEC/lEC), subiculum, and Hpc** in the Egyptian fruit bat atlas.
@@ -60,7 +60,10 @@ Windows and macOS were not available for native testing.
 
 Anatomy and trajectory planning work offline. **Generate video** includes
 previews for regions, probes, the brain outline, and a coronal atlas page with
-adjustable transparency. Saving MP4/MOV files to a folder requires the local
+adjustable transparency. **Brain focus (crop PCB)** is the default video framing:
+it keeps the selected anatomy and planned tracks in view while allowing the
+upper green PCB to extend outside the frame. **Fit whole probe** shows the
+entire body with a wider view. Saving MP4/MOV files to a folder requires the local
 BatBrain app and FFmpeg; this encrypted HTML download does not install that
 save service. Repository owners can install it from the private source/release
 using their authorized GitHub account.
@@ -101,7 +104,7 @@ JavaScript source files or a Python installer. Searching the locked HTML for
 planner source code will not find the decrypted application. Open the file
 in a browser and unlock it to verify **NP trajectory** is present.
 
-Pull this repository's `main` branch or download the v1.1.0 release, replace
+Pull this repository's `main` branch or download the v1.1.1 release, replace
 any older local copy, and reopen it in the browser. Your existing shared key
 still works. The separate `KrisKas6/bat-anatomy-viewer` source repository is
 private and requires GitHub authentication with access to that repository.
