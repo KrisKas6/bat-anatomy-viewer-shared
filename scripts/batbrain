@@ -1,0 +1,198 @@
+#!/usr/bin/env python3
+"""Open the installed offline BatBrain viewer from any terminal."""
+
+import argparse
+from contextlib import contextmanager
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import time
+import webbrowser
+from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+from urllib.request import ProxyHandler, build_opener
+
+
+DATA_DIR = Path(__file__).resolve().parent.parent / "share" / "batbrain"
+VIEWER = DATA_DIR / "index.html"
+CACHE_DIR = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "batbrain"
+STATE = CACHE_DIR / "server.json"
+IDENTITY = {"app": "batbrain", "viewer": str(VIEWER), "server_version": 3}
+HTTP = build_opener(ProxyHandler({}))
+sys.path.insert(0, str(DATA_DIR))
+
+
+def running_url():
+    """Only reuse a port that answers with this installation's identity."""
+    try:
+        port = int(json.loads(STATE.read_text())["port"])
+        if not 1 <= port <= 65535:
+            return None
+        url = f"http://127.0.0.1:{port}/"
+        with HTTP.open(url + "__batbrain_health", timeout=0.5) as response:
+            if json.load(response) == IDENTITY:
+                return url
+    except (OSError, ValueError, KeyError, TypeError):
+        pass
+    return None
+
+
+class ViewerHandler(SimpleHTTPRequestHandler):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, directory=str(DATA_DIR), **kwargs)
+
+    def do_GET(self):
+        if self.server.video_handler(self, self.server.video_service):
+            return
+        if self.path == "/__batbrain_health":
+            body = json.dumps(IDENTITY).encode()
+            self.send_response(200)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            self.wfile.write(body)
+        else:
+            super().do_GET()
+
+    def do_POST(self):
+        if not self.server.video_handler(self, self.server.video_service):
+            self.send_error(404)
+
+    def log_message(self, format, *args):
+        pass
+
+
+def serve():
+    from batbrain_video import VideoService, handle_video_request
+    preferred = 8766
+    try:
+        saved = int(json.loads(STATE.read_text())["port"])
+        if 1 <= saved <= 65535:
+            preferred = saved  # Keep browser bookmarks and saved plans across restarts.
+    except (OSError, ValueError, KeyError, TypeError):
+        pass
+    for port in dict.fromkeys([preferred, 8766, 0]):
+        try:
+            server = ThreadingHTTPServer(("127.0.0.1", port), ViewerHandler)
+            break
+        except OSError:
+            if port == 0:
+                raise
+    with server:
+        server.video_service = VideoService(DATA_DIR, CACHE_DIR)
+        server.video_handler = handle_video_request
+        temporary = STATE.with_suffix(".tmp")
+        temporary.write_text(json.dumps({"port": server.server_port, "pid": os.getpid()}))
+        temporary.replace(STATE)
+        server.serve_forever()
+
+
+@contextmanager
+def startup_lock():
+    with (CACHE_DIR / "startup.lock").open("a+b") as lock:
+        if os.name == 'nt':
+            import msvcrt
+            if lock.seek(0, 2) == 0:
+                lock.write(b'0'); lock.flush()
+            lock.seek(0)
+            msvcrt.locking(lock.fileno(), msvcrt.LK_LOCK, 1)
+        else:
+            import fcntl
+            fcntl.flock(lock, fcntl.LOCK_EX)
+        try:
+            yield
+        finally:
+            if os.name == 'nt':
+                lock.seek(0)
+                msvcrt.locking(lock.fileno(), msvcrt.LK_UNLCK, 1)
+
+
+def ensure_server():
+    # Concurrent terminal launches must not spawn duplicate servers.
+    with startup_lock():
+        url = running_url()
+        if url:
+            return url
+        with (CACHE_DIR / "server.log").open("a") as log:
+            child = subprocess.Popen(
+                [sys.executable, str(Path(__file__).resolve()), "--serve"],
+                stdin=subprocess.DEVNULL, stdout=log, stderr=log,
+                start_new_session=os.name != 'nt', close_fds=True, cwd=str(DATA_DIR),
+                creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0,
+            )
+        for _ in range(50):
+            url = running_url()
+            if url:
+                return url
+            if child.poll() is not None:
+                break
+            time.sleep(0.1)
+        if child.poll() is None:
+            child.terminate()
+        raise RuntimeError(f"Could not start the viewer. See {CACHE_DIR / 'server.log'}")
+
+
+def print_link(url):
+    # OSC 8 adds a clickable hyperlink in supporting terminals; the URL stays
+    # visible and can always be copied, even in terminals without link support.
+    if sys.stdout.isatty() and os.environ.get("TERM") != "dumb":
+        link = f"\033]8;;{url}\033\\{url}\033]8;;\033\\"
+    else:
+        link = url
+    print(f"BatBrain: {link}", flush=True)
+
+
+def open_browser(url):
+    if sys.platform == 'darwin' or os.name == 'nt':
+        try:
+            if webbrowser.open(url):
+                return
+        except webbrowser.Error:
+            pass
+        print('Open the link above in your browser.')
+        return
+    opener = shutil.which("xdg-open")
+    if not opener or not (os.environ.get("DISPLAY") or os.environ.get("WAYLAND_DISPLAY")):
+        print("Open the link above in your browser.")
+        return
+    try:
+        child = subprocess.Popen(
+            [opener, url], stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
+            start_new_session=True, close_fds=True,
+        )
+        try:
+            if child.wait(timeout=3) != 0:
+                print("Browser did not open automatically. Open the link above.")
+        except subprocess.TimeoutExpired:
+            # Some desktop openers stay alive for the lifetime of the browser.
+            pass
+    except OSError:
+        print("Browser did not open automatically. Open the link above.")
+
+
+def main():
+    parser = argparse.ArgumentParser(description="Open the offline 3D bat brain viewer and print its browser link.")
+    parser.add_argument("--no-open", action="store_true", help="print the link without opening a browser")
+    parser.add_argument("--serve", action="store_true", help=argparse.SUPPRESS)
+    args = parser.parse_args()
+    if not VIEWER.is_file():
+        parser.exit(1, f"BatBrain viewer is missing: {VIEWER}\nRun the BatBrain installer again.\n")
+    try:
+        CACHE_DIR.mkdir(parents=True, exist_ok=True, mode=0o700)
+        if args.serve:
+            serve()
+        else:
+            url = ensure_server()
+            print_link(url)
+            if not args.no_open:
+                open_browser(url)
+    except (OSError, RuntimeError) as error:
+        parser.exit(1, f"BatBrain: {error}\n")
+
+
+if __name__ == "__main__":
+    main()

@@ -1,23 +1,62 @@
 # Bat anatomy explorer — offline, shared-key edition
 
-**Current download: v1.1.1 (September 18, 2026), with larger brain framing in probe videos.**
+**Current download: v1.2.0, including a public installer with MP4/MOV video saving.**
 
 Explore **presubiculum (PrS), parasubiculum (PaS), medial and lateral entorhinal
 cortex (mEC/lEC), subiculum, and Hpc** in the Egyptian fruit bat atlas.
 
-Works on **Linux, Windows, and macOS** in a current desktop browser. Download
-once, open the HTML file, and enter the access key supplied by the person who
-shared this viewer. No account, Python, installation, or local server is
-needed to run it. Internet is only needed for the initial download or updates.
+Use the **BatBrain app package** for anatomy, trajectory planning and saving
+videos on your computer. No GitHub account or private repository access is
+needed. The separate HTML download provides viewing and video previews.
 
 **The access key is shared separately and is not in this repository.**
 
-## Download and open
+## Install BatBrain to save videos
 
-The easiest option is to download **bat_anatomy_viewer_locked.html** from the
+Download **[batbrain_shared_app.zip](https://github.com/KrisKas6/bat-anatomy-viewer-shared/releases/latest/download/batbrain_shared_app.zip)**
+and extract the entire ZIP. Install Python 3.9 or newer if needed, then open
+a terminal in the extracted folder and run:
+
+**Windows:**
+```powershell
+py -3 scripts/install_batbrain.py --open
+```
+
+**macOS or Linux:**
+```bash
+python3 scripts/install_batbrain.py --open
+```
+
+The installer includes the video save service and automatically sets up
+FFmpeg. Initial encoder setup needs internet; the installed app works offline.
+It uses your user account without administrator privileges. Enter your existing
+shared key when the browser opens, choose **Generate video**, select MP4 or MOV,
+and paste a folder path or click **Browse…**. Keep the tab visible while recording.
+
+Open it again with `batbrain` when `.local/bin` is on your PATH. Otherwise use:
+
+| Operating system | Command |
+| --- | --- |
+| Windows PowerShell | `& "$env:USERPROFILE\.local\bin\batbrain.cmd"` |
+| macOS or Linux | `python3 "$HOME/.local/bin/batbrain"` |
+
+The launcher always prints a clickable/copyable browser link. If the browser
+does not open automatically, open that link. Browse uses Zenity or Python Tk;
+you can always paste the folder path. An existing FFmpeg encoder can be supplied
+with `--ffmpeg /path/to/ffmpeg` for offline installation.
+
+Automatic encoder setup supports Windows x86/x64, macOS Intel/Apple Silicon,
+and Linux x64/ARM64. The complete installed workflow is tested in Chrome on Linux;
+Windows and macOS have not been tested natively. Full package instructions:
+[APP_README.md](APP_README.md).
+
+## Viewer-only HTML download
+
+For viewing without installation, download **bat_anatomy_viewer_locked.html** from the
 [latest release](https://github.com/KrisKas6/bat-anatomy-viewer-shared/releases/latest)
 and double-click it. Open it with a current Chrome, Edge, Firefox, or Safari.
 Enter the shared key. After downloading, the viewer works with the network off.
+This file alone supports video previews; install the app above to save videos.
 
 Alternatively, with [Git](https://git-scm.com/downloads) installed, run:
 
@@ -26,7 +65,8 @@ git clone --depth 1 https://github.com/KrisKas6/bat-anatomy-viewer-shared.git
 cd bat-anatomy-viewer-shared
 ```
 
-Then open it using the command for your operating system:
+To install from the clone, run the installation command above. For viewing only,
+open the HTML using the command for your operating system:
 
 | Operating system | Command |
 | --- | --- |
@@ -63,10 +103,9 @@ previews for regions, probes, the brain outline, and a coronal atlas page with
 adjustable transparency. **Brain focus (crop PCB)** is the default video framing:
 it keeps the selected anatomy and planned tracks in view while allowing the
 upper green PCB to extend outside the frame. **Fit whole probe** shows the
-entire body with a wider view. Saving MP4/MOV files to a folder requires the local
-BatBrain app and FFmpeg; this encrypted HTML download does not install that
-save service. Repository owners can install it from the private source/release
-using their authorized GitHub account.
+entire body with a wider view. The public app installer supplies the local
+save service and encoder needed for MP4/MOV folder saving. Open its local
+browser link and unlock the viewer to export videos.
 
 Links to the paper and publisher websites
 require internet if you choose to open them.
@@ -93,18 +132,20 @@ For a clone, download updates while online with:
 git pull --ff-only
 ```
 
-For a release download, replace your HTML file with the newer release file.
+For an installed app, extract the latest app ZIP and rerun the installer.
+For a viewer-only download, replace your HTML file with the newer release file.
 If a later release uses a new key, ask the person who shared it for that key.
 `SHA256SUMS.txt` contains the download checksum.
 
 ## Updating with an assistant or coding agent
 
-This public repository contains the **encrypted download**, not separate
-JavaScript source files or a Python installer. Searching the locked HTML for
+This public repository contains the **encrypted viewer and Python installation
+utilities**. Searching the locked HTML for
 planner source code will not find the decrypted application. Open the file
 in a browser and unlock it to verify **NP trajectory** is present.
 
-Pull this repository's `main` branch or download the v1.1.1 release, replace
-any older local copy, and reopen it in the browser. Your existing shared key
-still works. The separate `KrisKas6/bat-anatomy-viewer` source repository is
-private and requires GitHub authentication with access to that repository.
+Pull this repository's `main` branch or download the v1.2.0 app ZIP, then run
+`python3 scripts/install_batbrain.py --open` (Windows: `py -3` in place of
+`python3`). The installer includes the local save service and automatically
+installs FFmpeg. Your existing key still works. End users do not need the
+private source repository for installation or video export.
