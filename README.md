@@ -1,7 +1,9 @@
 # Bat anatomy explorer — offline, shared-key edition
 
-Explore **presubiculum (PrS), parasubiculum (PaS), medial entorhinal cortex
-(mEC), subiculum, and hippocampus/DG** in the Egyptian fruit bat atlas.
+**Current download: v1.1.0 (September 18, 2026), including the NP trajectory planner.**
+
+Explore **presubiculum (PrS), parasubiculum (PaS), medial and lateral entorhinal
+cortex (mEC/lEC), subiculum, and Hpc** in the Egyptian fruit bat atlas.
 
 Works on **Linux, Windows, and macOS** in a current desktop browser. Download
 once, open the HTML file, and enter the access key supplied by the person who
@@ -48,9 +50,22 @@ Windows and macOS were not available for native testing.
 - Move the coronal section slider to compare filled regions with the atlas.
 - Open the original atlas image or enlarge the region boundary overlay.
 - Export a surface as OBJ, region contours as JSON, or the current view as PNG.
+- Click **NP trajectory** in the top toolbar after unlocking. Set entry and
+  target coordinates, or pick them on an atlas section.
+- Select **NPX 2.0 · 4 shanks** for ML/AP shank orientation, additional roll,
+  and an optional green PCB probe body. **Fit whole probe** shows its full extent.
+- Save/load trajectory plans as JSON and export section crossings as CSV.
+- Expand **EC** to select **mEC** and **lEC** separately.
 - Click **Lock viewer** to close the atlas and return to the key prompt.
 
-All atlas functions work offline. Links to the paper and publisher websites
+Anatomy and trajectory planning work offline. **Generate video** includes
+previews for regions, probes, the brain outline, and a coronal atlas page with
+adjustable transparency. Saving MP4/MOV files to a folder requires the local
+BatBrain app and FFmpeg; this encrypted HTML download does not install that
+save service. Repository owners can install it from the private source/release
+using their authorized GitHub account.
+
+Links to the paper and publisher websites
 require internet if you choose to open them.
 
 These are **draft atlas-derived segmentations**, with interpreted boundaries
@@ -78,3 +93,15 @@ git pull --ff-only
 For a release download, replace your HTML file with the newer release file.
 If a later release uses a new key, ask the person who shared it for that key.
 `SHA256SUMS.txt` contains the download checksum.
+
+## Updating with an assistant or coding agent
+
+This public repository contains the **encrypted download**, not separate
+JavaScript source files or a Python installer. Searching the locked HTML for
+planner source code will not find the decrypted application. Open the file
+in a browser and unlock it to verify **NP trajectory** is present.
+
+Pull this repository's `main` branch or download the v1.1.0 release, replace
+any older local copy, and reopen it in the browser. Your existing shared key
+still works. The separate `KrisKas6/bat-anatomy-viewer` source repository is
+private and requires GitHub authentication with access to that repository.
