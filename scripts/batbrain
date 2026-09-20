@@ -19,7 +19,7 @@ DATA_DIR = Path(__file__).resolve().parent.parent / "share" / "batbrain"
 VIEWER = DATA_DIR / "index.html"
 CACHE_DIR = Path(os.environ.get("XDG_CACHE_HOME", Path.home() / ".cache")) / "batbrain"
 STATE = CACHE_DIR / "server.json"
-IDENTITY = {"app": "batbrain", "viewer": str(VIEWER), "server_version": 3}
+IDENTITY = {"app": "batbrain", "viewer": str(VIEWER), "server_version": 4}
 HTTP = build_opener(ProxyHandler({}))
 sys.path.insert(0, str(DATA_DIR))
 

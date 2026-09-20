@@ -38,14 +38,28 @@ class VideoService:
 
     def config(self):
         return {'version': 1, 'token': self.token, 'folder': self.default_folder(),
-                'ready': bool(self.ffmpeg()), 'browse': bool(shutil.which('zenity') or importlib.util.find_spec('tkinter')),
+                'ready': bool(self.ffmpeg()), 'browse': bool(self.picker()),
                 'formats': ['mp4', 'mov']}
+
+    @staticmethod
+    def picker():
+        if sys.platform == 'darwin' and shutil.which('osascript'):
+            return 'mac'
+        if sys.platform == 'win32' and shutil.which('powershell.exe'):
+            return 'windows'
+        if shutil.which('zenity'):
+            return 'zenity'
+        return 'tk' if importlib.util.find_spec('tkinter') else None
 
     @staticmethod
     def folder(raw):
         if not isinstance(raw, str) or not raw.strip() or '\x00' in raw:
             raise ValueError('Enter a save-folder path.')
-        path = Path(raw.strip()).expanduser()
+        text = raw.strip()
+        # Explorer's Copy as path includes quotes around paths with spaces.
+        if len(text) > 1 and text[0] == text[-1] and text[0] in ('"', "'"):
+            text = text[1:-1]
+        path = Path(text).expanduser()
         if not path.is_absolute():
             raise ValueError('Enter an absolute folder path, or a path starting with ~/.')
         path = path.resolve()
@@ -54,7 +68,9 @@ class VideoService:
         return path
 
     def browse(self, raw):
-        chooser = shutil.which('zenity')
+        chooser = self.picker()
+        if not chooser:
+            raise ValueError('The folder browser is unavailable. Paste the folder path instead.')
         try:
             initial = self.folder(raw or self.default_folder())
         except ValueError:
@@ -62,8 +78,24 @@ class VideoService:
         if not self.browse_lock.acquire(blocking=False):
             raise ValueError('A folder browser is already open.')
         try:
-            if chooser:
-                command = [chooser, '--file-selection', '--directory',
+            environment = dict(os.environ, PYTHONIOENCODING='utf-8', BATBRAIN_INITIAL_FOLDER=str(initial))
+            if chooser == 'mac':
+                script = ('on run argv\ntry\n'
+                          'return POSIX path of (choose folder with prompt "Choose a folder for the BatBrain video" '
+                          'default location (POSIX file (item 1 of argv)))\n'
+                          'on error number -128\nreturn ""\nend try\nend run')
+                command = [shutil.which('osascript'), '-e', script, str(initial)]
+            elif chooser == 'windows':
+                script = ('[Console]::OutputEncoding = [System.Text.UTF8Encoding]::new($false); '
+                          'Add-Type -AssemblyName System.Windows.Forms; '
+                          '$picker = New-Object System.Windows.Forms.FolderBrowserDialog; '
+                          '$picker.Description = "Choose a folder for the BatBrain video"; '
+                          '$picker.SelectedPath = $env:BATBRAIN_INITIAL_FOLDER; '
+                          'try { if ($picker.ShowDialog() -eq [System.Windows.Forms.DialogResult]::OK) '
+                          '{ [Console]::WriteLine($picker.SelectedPath) } } finally { $picker.Dispose() }')
+                command = [shutil.which('powershell.exe'), '-NoProfile', '-STA', '-Command', script]
+            elif chooser == 'zenity':
+                command = [shutil.which('zenity'), '--file-selection', '--directory',
                            '--title=Choose a folder for the BatBrain video', '--filename=' + str(initial) + '/']
             else:
                 # Run Tk in its own main thread/process, including on Windows/macOS.
@@ -72,8 +104,9 @@ class VideoService:
                            'root=tk.Tk(); root.withdraw(); '
                            'print(filedialog.askdirectory(title="Choose a folder for the BatBrain video", initialdir=sys.argv[1])); root.destroy()', str(initial)]
             result = subprocess.run(command,
-                                    stdin=subprocess.DEVNULL, capture_output=True, text=True, timeout=180)
-            if (chooser and result.returncode == 1) or (result.returncode == 0 and not result.stdout.strip()):
+                                    stdin=subprocess.DEVNULL, capture_output=True, text=True,
+                                    encoding='utf-8', env=environment, timeout=180)
+            if (chooser == 'zenity' and result.returncode == 1) or (result.returncode == 0 and not result.stdout.strip()):
                 return {'cancelled': True}
             if result.returncode != 0:
                 raise ValueError('The folder browser could not open. Paste the folder path instead.')
@@ -96,6 +129,10 @@ class VideoService:
             name = name[:-4]
         if not name or name in ('.', '..') or len(name) > 120 or any(c in '/\\' or ord(c) < 32 for c in name):
             raise ValueError('Use a filename of 1–120 characters without slashes.')
+        if os.name == 'nt' and (any(c in '<>:"|?*' for c in name) or name.endswith(('.', ' ')) or
+                name.split('.')[0].upper() in {'CON', 'PRN', 'AUX', 'NUL',
+                                             *(f'COM{i}' for i in range(1,10)), *(f'LPT{i}' for i in range(1,10))}):
+            raise ValueError('Choose a filename without Windows reserved names or characters (<>:"|?*).')
         # Fail before recording starts if the requested destination is not writable.
         with tempfile.TemporaryFile(dir=folder):
             pass

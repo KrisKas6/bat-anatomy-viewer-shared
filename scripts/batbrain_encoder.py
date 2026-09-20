@@ -22,6 +22,9 @@ WHEELS = {
 
 def wheel_for(system, machine):
     arch = {'amd64': 'x86_64', 'aarch64': 'arm64', 'i386': 'x86', 'i686': 'x86'}.get(machine.lower(), machine.lower())
+    # Windows 11 on ARM runs this pinned x64 executable through OS emulation.
+    if system == 'Windows' and arch == 'arm64':
+        arch = 'x86_64'
     try:
         path, tag, digest = WHEELS[system, arch]
     except KeyError:
@@ -42,12 +45,8 @@ def ensure_encoder(data_dir):
     target = data_dir / 'bin' / ('ffmpeg.exe' if platform.system() == 'Windows' else 'ffmpeg')
     if supports_h264(target):
         return target
-    system_binary = shutil.which('ffmpeg')
-    if system_binary and supports_h264(system_binary):
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copyfile(system_binary, target)
-        target.chmod(0o755)
-        return target
+    # Do not relocate a system FFmpeg: its shared-library paths may depend on
+    # the original install location. These wheels contain standalone binaries.
     url, expected = wheel_for(platform.system(), platform.machine())
     print('Installing the video encoder (one-time download)…', flush=True)
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -79,5 +78,5 @@ def ensure_encoder(data_dir):
             shutil.copyfile(binary, temporary_target)
             temporary_target.chmod(0o755)
             temporary_target.replace(target)
-            (target.parent / 'encoder-notices.txt').write_text('\n\n'.join(notices))
+            (target.parent / 'encoder-notices.txt').write_text('\n\n'.join(notices), encoding='utf-8')
     return target

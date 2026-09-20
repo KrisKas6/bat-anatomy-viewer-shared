@@ -33,7 +33,10 @@ The selected folder must already exist. Keep the tab visible while recording.
 
 ## Open it again
 
-Run `batbrain` if your user's `.local/bin` directory is on PATH. Otherwise:
+Open a new terminal and run `batbrain`. The installer adds the command to your
+Windows user PATH or your shell startup files on macOS/Linux. Use `--no-path`
+during installation to leave that configuration unchanged. You can also run
+the installed launcher directly:
 
 **Windows:**
 ```powershell
@@ -54,12 +57,16 @@ and video preview. Use the installed app's local link for video saving.
 Download the latest app ZIP, extract it and rerun the installer. This updates
 the encrypted viewer and launcher without changing your shared key.
 
-Automatic encoder setup supports Windows x86/x64, macOS Intel/Apple Silicon,
-and Linux x64/ARM64. Python and a current browser with WebGL are required;
+Automatic encoder setup supports Windows x86/x64 and Windows 11 ARM64
+(using its x64 app support), macOS Intel/Apple Silicon, and Linux x64/ARM64.
+Python and a current browser with WebGL are required;
 Chrome or Edge is recommended for video recording. The complete workflow is
 tested on Linux with Chrome. Windows and macOS have not been tested natively.
-Browse uses Zenity on Linux or Python's Tk folder picker; if neither is
-available, paste a folder path instead.
+Browse uses the native Windows or macOS folder picker. Linux uses Zenity or
+Python Tk; if neither is available, paste a folder path instead. Quoted paths
+copied from Windows Explorer and folder names with spaces or non-English
+characters are supported. The encoder download is standalone, so it does not
+depend on relocating a system FFmpeg installation or its shared libraries.
 
 The encoder is downloaded from the official, checksum-pinned
 [imageio-ffmpeg 0.6.0 wheels](https://pypi.org/project/imageio-ffmpeg/0.6.0/).
