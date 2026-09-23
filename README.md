@@ -1,6 +1,6 @@
 # Bat anatomy explorer — offline, shared-key edition
 
-**Current download: v1.3.0, with Windows, macOS and Linux installation and video saving fixes.**
+**Current download: v1.4.0, with recording-channel selection, color groups and video overlays.**
 
 Explore **presubiculum (PrS), parasubiculum (PaS), medial and lateral entorhinal
 cortex (mEC/lEC), subiculum, and Hpc** in the Egyptian fruit bat atlas.
@@ -98,7 +98,15 @@ Windows and macOS were not available for native testing.
   target coordinates, or pick them on an atlas section.
 - Select **NPX 2.0 · 4 shanks** for ML/AP shank orientation, additional roll,
   and an optional green PCB probe body. **Fit whole probe** shows its full extent.
-- Save/load trajectory plans as JSON and export section crossings as CSV.
+- Under **Recording channels**, click **Select channels** to import SpikeGLX AP
+  `.meta`, Trodes `.trodesconf`, Kilosort `chanMap.json`, or ProbeInterface
+  `probegroup.json`. A physical-site template is also available. Enter IDs or
+  ranges, click/drag on the map, or select a depth interval from the tip or entry.
+  Assign sites to named color groups; selections rotate with the probe and
+  appear in videos when trajectories are included. Maps without a physical tip
+  offset require confirmation under **Tip calibration & map conventions**.
+- Save/load trajectory plans and channel selections as JSON. Export section
+  crossings or selected channels, depths and coordinates as CSV.
 - Expand **EC** to select **mEC** and **lEC** separately.
 - Click **Lock viewer** to close the atlas and return to the key prompt.
 
@@ -148,7 +156,7 @@ utilities**. Searching the locked HTML for
 planner source code will not find the decrypted application. Open the file
 in a browser and unlock it to verify **NP trajectory** is present.
 
-Pull this repository's `main` branch or download the v1.3.0 app ZIP, then run
+Pull this repository's `main` branch or download the v1.4.0 app ZIP, then run
 `python3 scripts/install_batbrain.py --open` (Windows: `py -3` in place of
 `python3`). The installer includes the local save service and automatically
 installs FFmpeg. Your existing key still works. End users do not need the

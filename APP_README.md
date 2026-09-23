@@ -31,6 +31,22 @@ shared key, choose **Generate video**, select the regions and optional probe,
 choose MP4 or MOV, and paste a save-folder path or click **Browse…**.
 The selected folder must already exist. Keep the tab visible while recording.
 
+## Select recording channels
+
+Open **NP trajectory → Recording channels → Select channels**. Import a
+SpikeGLX AP `.meta`, Trodes `.trodesconf`, Kilosort `chanMap.json` or
+ProbeInterface `probegroup.json`, or use the NP2014 physical-site template.
+Enter channel IDs/ranges, click or drag across the map, or select a depth
+interval in µm from the tip or entry. Assign sites to named color groups.
+Choose the correct numbering convention and shank; hardware IDs and saved
+indices can differ. Maps without a physical tip offset need confirmation
+under **Tip calibration & map conventions** before atlas placement.
+
+Selected sites follow probe rotation and appear in the nearest coronal
+section. Save the map and selections with the plan JSON, or export selected
+channels as CSV. **Include probe trajectories** in video export includes the
+enabled recording-site colors and group legend. Channel maps are read locally.
+
 ## Open it again
 
 Open a new terminal and run `batbrain`. The installer adds the command to your
