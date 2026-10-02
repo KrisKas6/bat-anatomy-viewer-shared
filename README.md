@@ -1,6 +1,6 @@
 # Bat anatomy explorer — offline, shared-key edition
 
-**Current download: v1.4.0, with recording-channel selection, color groups and video overlays.**
+**Current download: v1.5.0, with a separate histology alignment window, section crops and atlas-page ranges.**
 
 Explore **presubiculum (PrS), parasubiculum (PaS), medial and lateral entorhinal
 cortex (mEC/lEC), subiculum, and Hpc** in the Egyptian fruit bat atlas.
@@ -108,7 +108,15 @@ Windows and macOS were not available for native testing.
 - Save/load trajectory plans and channel selections as JSON. Export section
   crossings or selected channels, depths and coordinates as CSV.
 - Expand **EC** to select **mEC** and **lEC** separately.
-- Click **Lock viewer** to close the atlas and return to the key prompt.
+- Click **Histology alignment ↗** for a separate window. Import JPEG/PNG slides,
+  crop sections or split a slide into a grid, and assign an approximate printed
+  atlas-page range. Keep slice spacing as metadata without forcing exact AP
+  assignments. Move, rotate, flip and scale overlays; fit paired anatomical
+  landmarks or preview an image-based refinement. Partial sections can use
+  landmarks on the available tissue. Save/load projects, export overlay PNGs,
+  and download landmark coordinates as CSV. CZI/TIFF scans need an image export.
+- Click **Lock viewer** to close the atlas and its alignment window, and return
+  to the key prompt. Save histology projects before locking or reloading.
 
 Anatomy and trajectory planning work offline. **Generate video** includes
 previews for regions, probes, the brain outline, and a coronal atlas page with
@@ -156,7 +164,7 @@ utilities**. Searching the locked HTML for
 planner source code will not find the decrypted application. Open the file
 in a browser and unlock it to verify **NP trajectory** is present.
 
-Pull this repository's `main` branch or download the v1.4.0 app ZIP, then run
+Pull this repository's `main` branch or download the v1.5.0 app ZIP, then run
 `python3 scripts/install_batbrain.py --open` (Windows: `py -3` in place of
 `python3`). The installer includes the local save service and automatically
 installs FFmpeg. Your existing key still works. End users do not need the

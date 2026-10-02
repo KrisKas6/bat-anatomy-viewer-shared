@@ -47,6 +47,26 @@ section. Save the map and selections with the plan JSON, or export selected
 channels as CSV. **Include probe trajectories** in video export includes the
 enabled recording-site colors and group legend. Channel maps are read locally.
 
+## Align histology in a separate window
+
+Click **Histology alignment ↗** and allow its window if your browser blocks
+pop-ups. Import JPEG/PNG slides (use an exported image for CZI/TIFF), duplicate
+entries or split a slide into a grid, and crop each section independently.
+Enter an approximate **printed atlas-page range** and optional slice spacing.
+The displayed page stays provisional until you explicitly confirm it.
+
+Move, rotate, flip and scale the overlay. For partial sections, place paired
+landmarks on the available tissue and fit them. Image-based refinement offers
+a nearby candidate to preview and accept/discard; it does not determine the
+exact atlas page. Save a project to retain working images, crops, ranges,
+spacing, transforms and landmarks. PNG overlay and landmark CSV exports are
+also available. The atlas covers the right hemisphere; crop the matching
+hemisphere from a bilateral section.
+
+Images are processed locally. Original scans remain unchanged. Save the
+project before reloading or locking BatBrain; locking closes the alignment
+window. Closing only the alignment window retains it in the current session.
+
 ## Open it again
 
 Open a new terminal and run `batbrain`. The installer adds the command to your
