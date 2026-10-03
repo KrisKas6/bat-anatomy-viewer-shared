@@ -1,6 +1,6 @@
 # Bat anatomy explorer — offline, shared-key edition
 
-**Current download: v1.7.0, with NPX 2.0 hardware routing, valid channel patterns and IMRO import/export.**
+**Current download: v1.8.0, with electrode hover on the atlas, shank-map zoom and channel undo/redo.**
 
 Explore **presubiculum (PrS), parasubiculum (PaS), medial and lateral entorhinal
 cortex (mEC/lEC), subiculum, and Hpc** in the Egyptian fruit bat atlas.
@@ -81,6 +81,22 @@ and drag to pan. The atlas image and recording markers stay aligned.
 interactive. Map selections preview during a drag. Enable **Live depth range**
 to move the current group's selection by changing depth limits or the shank
 filter, without closing the editor. Sites appear on their nearest atlas section.
+
+Hover an electrode to see a cyan point on the atlas before selecting it. The
+atlas follows its nearest page; uncheck **Follow hovered electrode in atlas**
+to hold the current page. The readout includes channel IDs, coordinates and the
+AP distance to that section.
+
+Wheel or **+/−** zooms the shank map. **Individual electrodes** shows separate
+contacts and electrode IDs; **Shanks in map** focuses one shank and also shows
+AP channel labels. Right-drag, Shift+wheel or arrow keys pan along the shanks;
+**Fit map** or **0** resets the overview.
+
+Use **Undo/Redo**, **Ctrl+Z / Ctrl+Shift+Z** (Cmd on Mac), or **Ctrl+Y** for up to
+40 channel edits. A drag or live slider gesture is one edit. Undo pauses live
+depth and preset movement. Text fields keep their normal text undo; use the
+buttons to undo selections while typing. History lasts for the session and
+covers channel edits, not trajectory movement.
 
 ## Viewer-only HTML download
 

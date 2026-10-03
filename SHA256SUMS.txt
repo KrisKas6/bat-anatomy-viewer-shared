@@ -1,1 +1,1 @@
-add13ed4e4648adc7b7f3ac29666835fb95d7e1125219e21b4abeae5f4f36daa  bat_anatomy_viewer_locked.html
+4f79808d6be529e860584ee007a8ade53f06f18d08fa9c9281c4bf4f4c9638fa  bat_anatomy_viewer_locked.html
