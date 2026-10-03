@@ -1,6 +1,6 @@
 # Bat anatomy explorer — offline, shared-key edition
 
-**Current download: v1.5.0, with a separate histology alignment window, section crops and atlas-page ranges.**
+**Current download: v1.6.0, with resizable panels, atlas zoom/pan and live channel editing.**
 
 Explore **presubiculum (PrS), parasubiculum (PaS), medial and lateral entorhinal
 cortex (mEC/lEC), subiculum, and Hpc** in the Egyptian fruit bat atlas.
@@ -53,6 +53,18 @@ x64 app support, macOS Intel/Apple Silicon, and Linux x64/ARM64.
 The complete installed workflow is tested in Chrome on Linux;
 Windows and macOS have not been tested natively. Full package instructions:
 [APP_README.md](APP_README.md).
+
+## Resize panels, zoom the atlas and edit channels live
+
+Drag panel dividers to resize the controls, 3D view, atlas and timeline. The
+histology window has dividers too. Sizes are remembered; use **Reset panels**
+to restore the layout. Zoom the atlas with **+ / − / Fit** or the mouse wheel,
+and drag to pan. The atlas image and recording markers stay aligned.
+
+**Select channels** opens a movable, resizable editor that keeps the main views
+interactive. Map selections preview during a drag. Enable **Live depth range**
+to move the current group's selection by changing depth limits or the shank
+filter, without closing the editor. Sites appear on their nearest atlas section.
 
 ## Viewer-only HTML download
 

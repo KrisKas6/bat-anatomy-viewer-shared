@@ -43,9 +43,24 @@ indices can differ. Maps without a physical tip offset need confirmation
 under **Tip calibration & map conventions** before atlas placement.
 
 Selected sites follow probe rotation and appear in the nearest coronal
-section. Save the map and selections with the plan JSON, or export selected
+section. The editor stays open while you use the 3D view and atlas. Drag its
+title to move it or its bottom corner to resize it. Map selections update live
+while dragging. Enable **Live depth range** to replace the current group as
+you adjust depth limits or the shank filter; disable it to combine ranges.
+Save the map and selections with the plan JSON, or export selected
 channels as CSV. **Include probe trajectories** in video export includes the
 enabled recording-site colors and group legend. Channel maps are read locally.
+
+## Resize panels and zoom the atlas
+
+Drag the dividers between the controls, 3D view, atlas and section timeline.
+Panel sizes are remembered; **Reset panels** restores them. Double-click a
+divider to reset it, or focus it and use arrow keys / Home. The histology
+window's panels also have dividers. On phones, panels stack vertically.
+
+Use **+ / − / Fit** or the wheel in the atlas panel to zoom, and drag to pan.
+Drag the image viewport's bottom corner to change its height. Region boundaries
+and channel markers remain aligned, and trajectory picking works at any zoom.
 
 ## Align histology in a separate window
 
