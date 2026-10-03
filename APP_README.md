@@ -34,8 +34,8 @@ The selected folder must already exist. Keep the tab visible while recording.
 ## Select recording channels
 
 Open **NP trajectory → Recording channels → Select channels**. Import a
-SpikeGLX AP `.meta`, Trodes `.trodesconf`, Kilosort `chanMap.json` or
-ProbeInterface `probegroup.json`, or use the NP2014 physical-site template.
+SpikeGLX `.imro` / AP `.meta`, Trodes `.trodesconf`, Kilosort `chanMap.json` or
+ProbeInterface `probegroup.json`, or choose **Use NPX 2.0 routing**.
 Enter channel IDs/ranges, click or drag across the map, or select a depth
 interval in µm from the tip or entry. Assign sites to named color groups.
 Choose the correct numbering convention and shank; hardware IDs and saved
@@ -50,6 +50,22 @@ you adjust depth limits or the shank filter; disable it to combine ranges.
 Save the map and selections with the plan JSON, or export selected
 channels as CSV. **Include probe trajectories** in video export includes the
 enabled recording-site colors and group legend. Channel maps are read locally.
+
+NP2013/NP2014 (four shanks) and NP2003/NP2004 (one shank) use the routing rules
+from [Bill Karsh's SpikeGLX](https://github.com/billkarsh/SpikeGLX/tree/efac8da3625724c703996cd3e409059968e9ac16/Src-imro).
+Hardware mode prevents different sites sharing an AP channel, across all banks,
+shanks and color groups. Dragging skips forbidden sites; conflicting ID/depth
+selections are rejected. Unidentified maps and older spatial plans are labeled
+unverified or not enforced.
+
+**Hardware-compatible patterns** offers complete 384-channel configurations:
+one shank, supported shank pairs, four shanks at the same depth, or diagonal
+patterns. Only valid depths appear on the slider. **Move this preset live**
+updates the views while moving it. Applying a preset replaces all color groups.
+Export a complete configuration as `.imro` and load it in SpikeGLX to apply it.
+Imported references are retained; new templates use external reference.
+Single-shank combined-bank acquisition is not modeled. The SpikeGLX copyright
+and redistribution notice is embedded in the viewer.
 
 ## Resize panels and zoom the atlas
 

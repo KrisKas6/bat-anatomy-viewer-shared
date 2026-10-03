@@ -1,6 +1,6 @@
 # Bat anatomy explorer — offline, shared-key edition
 
-**Current download: v1.6.0, with resizable panels, atlas zoom/pan and live channel editing.**
+**Current download: v1.7.0, with NPX 2.0 hardware routing, valid channel patterns and IMRO import/export.**
 
 Explore **presubiculum (PrS), parasubiculum (PaS), medial and lateral entorhinal
 cortex (mEC/lEC), subiculum, and Hpc** in the Egyptian fruit bat atlas.
@@ -53,6 +53,22 @@ x64 app support, macOS Intel/Apple Silicon, and Linux x64/ARM64.
 The complete installed workflow is tested in Chrome on Linux;
 Windows and macOS have not been tested natively. Full package instructions:
 [APP_README.md](APP_README.md).
+
+## NPX 2.0 channel routing
+
+Under **NP trajectory → Select channels**, choose your probe model and **Use NPX
+2.0 routing**. NP2013/NP2014 and NP2003/NP2004 use the channel rules from
+[Bill Karsh's SpikeGLX](https://github.com/billkarsh/SpikeGLX/tree/efac8da3625724c703996cd3e409059968e9ac16/Src-imro).
+Hardware mode prevents sites sharing an AP channel across shanks, banks and
+color groups. Maps without a supported identity remain explicitly unverified.
+
+**Hardware-compatible patterns** offers 384-site configurations on one shank,
+supported pairs, four shanks at one depth, or diagonal stripes. Its depth slider
+visits only allowed rows; presets can update live in 3D and on the atlas.
+Applying a preset replaces all color groups. Import a SpikeGLX `.imro` or `.meta`,
+or export a complete 384-channel selection as `.imro` for loading in SpikeGLX.
+Single-shank combined-bank recordings are not modeled. Existing spatial plans
+remain readable, with their routing status shown.
 
 ## Resize panels, zoom the atlas and edit channels live
 
