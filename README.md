@@ -1,6 +1,6 @@
 # Bat anatomy explorer — offline, shared-key edition
 
-**Current download: v1.8.0, with electrode hover on the atlas, shank-map zoom and channel undo/redo.**
+**Current download: v1.9.0, with bat histology projects, freehand tissue crops, dye markings and 3D slice/probe reconstruction.**
 
 Explore **presubiculum (PrS), parasubiculum (PaS), medial and lateral entorhinal
 cortex (mEC/lEC), subiculum, and Hpc** in the Egyptian fruit bat atlas.
@@ -97,6 +97,28 @@ Use **Undo/Redo**, **Ctrl+Z / Ctrl+Shift+Z** (Cmd on Mac), or **Ctrl+Y** for up 
 depth and preset movement. Text fields keep their normal text undo; use the
 buttons to undo selections while typing. History lasts for the session and
 covers channel edits, not trajectory movement.
+
+## Bat histology projects and 3D reconstruction
+
+In **Histology alignment**, enter a **Bat ID** and give each slice a **Section
+ID** and **Area name**. **Freehand crop** lets you draw around the tissue.
+**Outline dye region** or **Trace probe dye** marks stain on either the source
+or aligned image. The markings move with the slice alignment. Reuse a **Probe
+ID** across slices for one track, with separate IDs for other probes or shanks.
+
+After aligning each slice, confirm its atlas page and click **Register slice
+to this bat**. **Show registered slices in 3D** adds the masked slices to the
+main atlas and connects matching dye-region centers in AP order. Adjust slice
+opacity and visibility in the main window. Uncertain or unreviewed slices stay
+pending. Connections interpolate between marked centers; ambiguous duplicate
+markings at the same page interrupt a line.
+
+Named bat projects autosave locally when browser storage is available. Reopen
+them under **Saved on this computer**. Download **Save bat project (JSON)** for
+backup or another computer; it includes images, crops, markings and registrations.
+Check the local save status: browser storage can be cleared or unavailable, and
+is specific to the browser/address. Probe-center CSV export includes identities,
+area names, atlas pages, coordinates and review flags. Original scans stay unchanged.
 
 ## Viewer-only HTML download
 

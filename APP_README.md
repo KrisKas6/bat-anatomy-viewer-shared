@@ -78,6 +78,24 @@ Use **+ / − / Fit** or the wheel in the atlas panel to zoom, and drag to pan.
 Drag the image viewport's bottom corner to change its height. Region boundaries
 and channel markers remain aligned, and trajectory picking works at any zoom.
 
+## Hover, zoom and undo channel selections
+
+Hover an electrode in **Select channels** to see its cyan point on the atlas,
+including electrodes not yet selected. The atlas follows the nearest section;
+uncheck **Follow hovered electrode in atlas** to keep the current page. The
+readout shows channel IDs, coordinates and the AP distance to that section.
+
+Wheel or **+/−** zooms the shank map. **Individual electrodes** shows separate
+contacts with electrode IDs; focus one shank under **Shanks in map** to see AP
+channel labels too. Right-drag, Shift+wheel or arrow keys pan along the probe;
+**Fit map** or **0** restores the overview.
+
+Use **Undo/Redo**, **Ctrl+Z / Ctrl+Shift+Z** (Cmd on Mac), or **Ctrl+Y** to reverse
+up to 40 channel edits. Each drag or live slider gesture is one edit. Undo
+pauses live depth and preset movement. Text fields retain normal text undo;
+use the buttons to undo a selection while typing. History lasts for this
+session and covers channel edits, not trajectory movement.
+
 ## Align histology in a separate window
 
 Click **Histology alignment ↗** and allow its window if your browser blocks
@@ -97,6 +115,30 @@ hemisphere from a bilateral section.
 Images are processed locally. Original scans remain unchanged. Save the
 project before reloading or locking BatBrain; locking closes the alignment
 window. Closing only the alignment window retains it in the current session.
+
+### Bat projects, freehand crops and probe reconstruction
+
+Enter the **Bat ID**, and a **Section ID** and **Area name** for each slice.
+Use **Freehand crop** to outline tissue. **Outline dye region** draws a closed
+region around dye (such as DiI); **Trace probe dye** draws an open track. Draw
+on either image. Crops and markings remain attached to the slice through its
+alignment, and Undo/Redo restores edits.
+
+Use the same **Probe ID** on different slices for one track. Different probe
+IDs remain separate. Once a slice is aligned, confirm its exact atlas page and
+click **Register slice to this bat**. **Show registered slices in 3D** adds the
+registered images to the main atlas and connects region centers (trace
+midpoints) in AP order. Opacity and per-slice visibility controls are in the
+main window. Connections interpolate between observations; duplicate markings
+at one page interrupt a connection. Uncertain or unreviewed slices stay pending.
+
+Named bat projects autosave in this browser when storage is available. Open
+them from **Saved on this computer**. Download **Save bat project (JSON)** for
+backup or another computer: it includes working images, freehand crops, dye
+markings, bat/section identities and registrations. Browser storage can be
+cleared and is specific to the browser/address. Check the save status; if local
+saving is unavailable, download JSON. Export probe-center coordinates as CSV
+to retain probe IDs, area names, pages and review flags alongside coordinates.
 
 ## Open it again
 
