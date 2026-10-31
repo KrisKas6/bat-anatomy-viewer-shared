@@ -1,6 +1,6 @@
 # Bat anatomy explorer — offline, shared-key edition
 
-**Current download: v1.9.0, with bat histology projects, freehand tissue crops, dye markings and 3D slice/probe reconstruction.**
+**Current download: v1.9.1, with Trodes config import, separate NPX 2.0 probe selection and automatic selection of configured channels.**
 
 Explore **presubiculum (PrS), parasubiculum (PaS), medial and lateral entorhinal
 cortex (mEC/lEC), subiculum, and Hpc** in the Egyptian fruit bat atlas.
@@ -53,6 +53,19 @@ x64 app support, macOS Intel/Apple Silicon, and Linux x64/ARM64.
 The complete installed workflow is tested in Chrome on Linux;
 Windows and macOS have not been tested natively. Full package instructions:
 [APP_README.md](APP_README.md).
+
+## Import a Trodes config
+
+Open **NP trajectory → Select channels → Import channel map / Trodes config**
+and choose the `.trodesconf` used for the recording. For multi-probe NPX 2.0
+configs, choose the probe and click **Use selected probe**. All channels listed
+for that probe are selected automatically. Confirm its physical tip convention
+under **Tip calibration & map conventions** to show them in 3D and on the atlas.
+
+Hardware IDs, nTrode IDs and XML config indices stay distinct. Trodes packet
+channels are not relabeled as SpikeGLX AP channels, and XML order is not assumed
+to be saved-file column order. Probe changes support Undo; save a separate plan
+for each probe. Configs are read locally and never change acquisition settings.
 
 ## NPX 2.0 channel routing
 

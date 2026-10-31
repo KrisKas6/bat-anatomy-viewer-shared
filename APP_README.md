@@ -36,6 +36,13 @@ The selected folder must already exist. Keep the tab visible while recording.
 Open **NP trajectory → Recording channels → Select channels**. Import a
 SpikeGLX `.imro` / AP `.meta`, Trodes `.trodesconf`, Kilosort `chanMap.json` or
 ProbeInterface `probegroup.json`, or choose **Use NPX 2.0 routing**.
+Trodes configs preselect their listed channels. For a multi-probe NPX 2.0
+config, choose the probe and click **Use selected probe**. Save a plan for each
+probe. Hardware (`hwChan`), nTrode and XML config indices stay distinct; XML
+indices are not saved-file columns. Use the config from the actual recording,
+since other workspaces in the same folder can contain different selections.
+Confirm Trodes' tip convention under **Tip calibration & map conventions**
+before atlas placement. Importing a config does not reconfigure acquisition.
 Enter channel IDs/ranges, click or drag across the map, or select a depth
 interval in µm from the tip or entry. Assign sites to named color groups.
 Choose the correct numbering convention and shank; hardware IDs and saved
