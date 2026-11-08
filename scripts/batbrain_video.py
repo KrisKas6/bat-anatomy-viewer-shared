@@ -182,6 +182,9 @@ class VideoService:
                     raise ValueError('The browser returned an invalid video recording.')
                 command = [self.ffmpeg(), '-nostdin', '-v', 'error', '-protocol_whitelist', 'file,pipe',
                            '-f', demuxer, '-i', str(incoming), '-map', '0:v:0', '-an',
+                           # Convert full-range canvas captures to standard video range;
+                           # tagging alone would alter the displayed background colors.
+                           '-vf', 'scale=in_range=auto:out_range=tv', '-color_range', 'tv',
                            '-c:v', 'libx264', '-threads', '2', '-preset', 'veryfast', '-crf', '18',
                            '-pix_fmt', 'yuv420p', '-r', '30', '-movflags', '+faststart',
                            '-f', job['format'], str(encoded)]

@@ -190,3 +190,9 @@ Encoder notices are kept with the installation. No atlas data, videos, or
 unlock key are uploaded by the app.
 
 Download updates: https://github.com/KrisKas6/bat-anatomy-viewer-shared/releases/latest
+
+Video export includes White/Dark/custom backgrounds and Grey/Blue-grey/custom
+brain outline colors, with adjustable outline opacity. Combined **RSC** is
+available in the 3D model, atlas overlays, and video region selector. Its
+atlas-based reconstruction spans plates 33–87 and requires anatomical review
+before quantitative use.

@@ -1,9 +1,9 @@
 # Bat anatomy explorer — offline, shared-key edition
 
-**Current download: v1.9.1, with Trodes config import, separate NPX 2.0 probe selection and automatic selection of configured channels.**
+**Current download: v1.10.0, with combined RSC and customizable video background, brain outline color, and outline opacity.**
 
 Explore **presubiculum (PrS), parasubiculum (PaS), medial and lateral entorhinal
-cortex (mEC/lEC), subiculum, and Hpc** in the Egyptian fruit bat atlas.
+cortex (mEC/lEC), subiculum, Hpc, and combined retrosplenial cortex (RSC)** in the Egyptian fruit bat atlas.
 
 Use the **BatBrain app package** for anatomy, trajectory planning and saving
 videos on your computer. No GitHub account or private repository access is
@@ -53,6 +53,22 @@ x64 app support, macOS Intel/Apple Silicon, and Linux x64/ARM64.
 The complete installed workflow is tested in Chrome on Linux;
 Windows and macOS have not been tested natively. Full package instructions:
 [APP_README.md](APP_README.md).
+
+## Video colors and RSC
+
+In **Generate video**, choose **White**, **Dark**, or a custom background.
+Enable **Include brain outline**, choose **Grey**, **Blue-grey**, or a custom
+outline color, and adjust **Outline opacity** (0% invisible, 100% solid).
+Changes appear in the preview and saved MP4/MOV files.
+
+**RSC** is one combined region in the region list, atlas overlays, trajectory
+intersections, and video selector. It follows the atlas's retrosplenial labels
+on plates 33–87 using 29 traced controls; the mixed RS29/PrS field on plate 78
+remains unsplit in Transitions. These are interpreted atlas boundaries that
+require expert review before quantitative use.
+
+To update an existing installation, download the latest ZIP and run its
+installer again, then reopen `batbrain`. The existing access key still works.
 
 ## Import a Trodes config
 
