@@ -1,6 +1,6 @@
 # Bat anatomy explorer — offline, shared-key edition
 
-**Current download: v1.10.0, with combined RSC and customizable video background, brain outline color, and outline opacity.**
+**Current download: v1.11.0, with manually entered brain surfaces for each shank, a 180° probe flip, and a linked planner window.**
 
 Explore **presubiculum (PrS), parasubiculum (PaS), medial and lateral entorhinal
 cortex (mEC/lEC), subiculum, Hpc, and combined retrosplenial cortex (RSC)** in the Egyptian fruit bat atlas.
@@ -53,6 +53,33 @@ x64 app support, macOS Intel/Apple Silicon, and Linux x64/ARM64.
 The complete installed workflow is tested in Chrome on Linux;
 Windows and macOS have not been tested natively. Full package instructions:
 [APP_README.md](APP_README.md).
+
+## Manually observed brain surfaces and probe mounting
+
+Open **NP trajectory → Observed brain surface** and enable **Use manually
+observed surface crossings**. For each shank, enter the first electrode you
+observed outside the brain, or its distance from the physical probe tip in µm.
+BatBrain does not read the recording. For electrode or channel IDs, choose the
+matching ID type from the loaded map and confirm that map's tip calibration.
+An ID's number is never interpreted as a depth. You can also choose a canonical
+NPX 2.0 physical electrode number (0–1279) on the specified shank.
+
+For example, a mapped site 9000 µm from the physical tip means approximately
+9 mm in brain. S1's measurement sets insertion; the other shanks have independent
+surface crossings while their tips remain rigidly aligned at 250 µm spacing.
+Unset shanks use the common reference plane. Purple markers show the estimated
+surface in 3D and on the atlas. An outside electrode marks an approximate
+boundary just tipward of its center.
+
+**Flip probe 180°** rotates the array, body and channel positions around S1.
+At ML span and zero extra roll, cap posterior makes S1 most medial; cap anterior
+makes S1 most lateral. S1 is the physical leftmost shank / map shank 0. AP span
+and additional roll rotate that mounting direction further.
+
+**Open planner in new window** provides a separate 3D view, atlas and channel
+editor. Valid trajectory and channel edits update both windows live. The
+installed app can save videos from this window too. Save a plan JSON to retain
+these settings; earlier saved plans still load.
 
 ## Video colors and RSC
 

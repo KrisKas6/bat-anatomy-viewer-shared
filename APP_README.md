@@ -196,3 +196,12 @@ brain outline colors, with adjustable outline opacity. Combined **RSC** is
 available in the 3D model, atlas overlays, and video region selector. Its
 atlas-based reconstruction spans plates 33–87 and requires anatomical review
 before quantitative use.
+
+In **NP trajectory**, manually enter each shank's observed brain-surface
+channel/electrode ID or distance from the physical tip. IDs resolve through
+the loaded map and confirmed tip calibration; recordings are not accessed.
+S1 sets insertion, while other shanks retain aligned tips and individual
+surface crossings. **Flip probe 180°** reverses the mounting: at ML span and
+zero extra roll, cap posterior makes S1 medial and cap anterior makes S1
+lateral. **Open planner in new window** provides linked controls, 3D, atlas
+and channels. Save a plan JSON to retain these settings.
