@@ -1,6 +1,6 @@
 # Bat anatomy explorer — offline, shared-key edition
 
-**Current download: v1.11.0, with manually entered brain surfaces for each shank, a 180° probe flip, and a linked planner window.**
+**Current download: v1.12.0, with selectable coordinate references: S1, S2, S3, S4, or the midpoint between S2 and S3.**
 
 Explore **presubiculum (PrS), parasubiculum (PaS), medial and lateral entorhinal
 cortex (mEC/lEC), subiculum, Hpc, and combined retrosplenial cortex (RSC)** in the Egyptian fruit bat atlas.
@@ -64,14 +64,21 @@ matching ID type from the loaded map and confirm that map's tip calibration.
 An ID's number is never interpreted as a depth. You can also choose a canonical
 NPX 2.0 physical electrode number (0–1279) on the specified shank.
 
+**Coordinates apply to** chooses which shank the entry and target coordinates
+describe: **S1, S2, S3, S4**, or **S2–S3 midpoint**. Changing the choice keeps
+the entered numbers and moves the probe. Flip and roll keep the chosen reference
+fixed; physical shank/channel IDs retain their identities. Older plans default to S1.
+
 For example, a mapped site 9000 µm from the physical tip means approximately
-9 mm in brain. S1's measurement sets insertion; the other shanks have independent
+9 mm in brain. The selected shank's measurement sets insertion. S2–S3 uses the
+mean of their measured depths when both are supplied; otherwise the entered
+insertion length is used. The other shanks have independent
 surface crossings while their tips remain rigidly aligned at 250 µm spacing.
 Unset shanks use the common reference plane. Purple markers show the estimated
 surface in 3D and on the atlas. An outside electrode marks an approximate
 boundary just tipward of its center.
 
-**Flip probe 180°** rotates the array, body and channel positions around S1.
+**Flip probe 180°** rotates the array, body and channel positions around the chosen reference.
 At ML span and zero extra roll, cap posterior makes S1 most medial; cap anterior
 makes S1 most lateral. S1 is the physical leftmost shank / map shank 0. AP span
 and additional roll rotate that mounting direction further.
